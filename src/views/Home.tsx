@@ -11,28 +11,28 @@ class Home extends Component<Props> {
     return (
       <React.Fragment>
         <Card style={{ margin: '2%' }}>
-          <CardActionArea onClick={() => this.props.history.push('/account')}>
+          <CardActionArea onClick={() => this.props.history.push('/monetary/account')}>
             <CardContent>
               <Typography variant="headline" component="h2">Cadastro de contas</Typography>
             </CardContent>
           </CardActionArea>
         </Card>
         <Card style={{ margin: '2%' }}>
-          <CardActionArea onClick={() => this.props.history.push('/accounts')}>
+          <CardActionArea onClick={() => this.props.history.push('/monetary/accounts')}>
             <CardContent>
               <Typography variant="headline" component="h2">Listagem de contas</Typography>
             </CardContent>
           </CardActionArea>
         </Card>
         <Card style={{ margin: '2%' }}>
-          <CardActionArea onClick={() => this.props.history.push('/accounts-entry')}>
+          <CardActionArea onClick={() => this.props.history.push('/monetary/accounts-entry')}>
             <CardContent>
               <Typography variant="headline" component="h2">Cadastro de entrada</Typography>
             </CardContent>
           </CardActionArea>
         </Card>
         <Card style={{ margin: '2%' }}>
-          <CardActionArea onClick={() => this.props.history.push('/accounts-out')}>
+          <CardActionArea onClick={() => this.props.history.push('/monetary/accounts-out')}>
             <CardContent>
               <Typography variant="headline" component="h2">Cadastro de saída</Typography>
             </CardContent>
