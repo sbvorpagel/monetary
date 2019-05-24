@@ -10,7 +10,10 @@ interface Transaction {
   currency: string
   to: string
   from: string
-  send: boolean
+  sended: boolean
+  out: boolean
+  entry: boolean
+  received: boolean
 }
 
 interface Balance {
@@ -59,7 +62,7 @@ export default class AccountTransaction extends Component<any, State> {
           return {
             ...balance,
             value: balance.value - value,
-            transactions: transactions.concat([{ date: new Date().toISOString(), send: true, value, currency, to, from, description }])
+            transactions: transactions.concat([{ date: new Date().toISOString(), sended: true, received: false, out: false, entry: false, value, currency, to, from, description }])
           }
         }
         return balance;
@@ -74,7 +77,7 @@ export default class AccountTransaction extends Component<any, State> {
             return {
               ...balance,
               value: balance.value + value,
-              transactions: transactions.concat([{ date: new Date().toISOString(), send: false, value, currency, to, from, description }])
+              transactions: transactions.concat([{ date: new Date().toISOString(), sended: false, received: true, out: false, entry: false, value, currency, to, from, description }])
             }
           }
           return balance;
@@ -83,7 +86,7 @@ export default class AccountTransaction extends Component<any, State> {
         newBalancesTo = oldBalancesTo.concat([{
           value,
           code: currency,
-          transactions: [{ date: new Date().toISOString(), send: false, value, currency, to, from, description }]
+          transactions: [{ date: new Date().toISOString(), sended: false, received: true, out: false, entry: false, value, currency, to, from, description }]
         }])
       }
       const promises = [

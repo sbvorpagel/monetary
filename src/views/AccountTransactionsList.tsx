@@ -11,7 +11,10 @@ interface Transaction {
   currency: string
   to: string
   from: string
-  send: boolean
+  sended: boolean
+  entry: boolean
+  out: boolean
+  received: boolean
 }
 
 interface Balance {
@@ -96,13 +99,19 @@ class AccountTransactionsList extends Component<any, State> {
           </TableHead>
           <TableBody>
             {transactions.map((transaction: Transaction, index: number) => {
-              const l10n = new Intl.NumberFormat("pt-BR", { style: "currency", currency: transaction.currency })
+              const l10n = new Intl.NumberFormat("pt-BR", { style: "currency", currency: transaction.currency });
+              let type;
+              if (transaction.entry) type = 'Entrada';
+              if (transaction.out) type = 'Saída';
+              if (transaction.sended) type = 'Enviado';
+              if (transaction.received) type = 'Recebido';
+
               return (
                 <TableRow key={transaction.currency + transaction.date + index}>
                   <TableCell>{transaction.date}</TableCell>
                   <TableCell>{transaction.currency}</TableCell>
                   <TableCell>{l10n.format(transaction.value)}</TableCell>
-                  <TableCell>{transaction.send ? 'Enviado' : 'Recebido'}</TableCell>
+                  <TableCell>{type}</TableCell>
                   <TableCell>{transaction.description}</TableCell>
                 </TableRow>
               );

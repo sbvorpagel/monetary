@@ -9,8 +9,10 @@ interface Transaction {
   value: number
   currency: string
   from: string
+  sended: boolean
   out: boolean
   entry: boolean
+  received: boolean
 }
 
 interface Balance {
@@ -63,7 +65,7 @@ export default class AccountTransaction extends Component<Prop, State> {
           return {
             ...balance,
             value: isEntry ? balance.value + value : balance.value - value,
-            transactions: transactions.concat([{ date: new Date().toISOString(), value, currency, from, description, entry: !!isEntry, out: !isEntry }])
+            transactions: transactions.concat([{ date: new Date().toISOString(), value, currency, from, description, sended: false, received: false,  entry: !!isEntry, out: !isEntry }])
           }
         }
         return balance;
