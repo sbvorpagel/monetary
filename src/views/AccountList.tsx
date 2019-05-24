@@ -65,7 +65,7 @@ class AccountList extends Component<any, State> {
               <Card style={{ margin: 16 }}>
                 <CardContent>
                   <Typography variant="headline" component="h2">{account.description}</Typography>
-                  <Typography>{`Moedas: ${account.balances.length}`}</Typography>
+                  <Typography>{`Moedas: ${(account.balances || []).length}`}</Typography>
                   <Button color='inherit' onClick={() => this.props.history.push(`/account/${account.id}`)}>Editar</Button>
                   <Button color='primary' onClick={() => this.props.history.push(`/account-transactions-list/${account.id}`)}>Ver transações</Button>
                 </CardContent>
