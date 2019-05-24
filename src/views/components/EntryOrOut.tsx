@@ -74,7 +74,7 @@ export default class AccountTransaction extends Component<Prop, State> {
       FirebaseService.updateData(from, 'accounts', {
         ...accountFrom,
         balances: newBalancesFrom,
-      }).then(() => this.props.history.push('/accounts/'));
+      }).then(() => this.props.history.push('/monetary/accounts/'));
     }
   };
 

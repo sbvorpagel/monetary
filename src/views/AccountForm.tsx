@@ -72,7 +72,7 @@ class AccountsForm extends Component<Props, State> {
         description,
         balances,
       });
-      this.props.history.push(`/account/${newId}`);
+      this.props.history.push(`/monetary/account/${newId}`);
     }
   }
 

@@ -99,7 +99,7 @@ export default class AccountTransaction extends Component<any, State> {
           balances: newBalancesTo,
         }),
       ];
-      Promise.all(promises).then(() => this.props.history.push('/accounts/'));
+      Promise.all(promises).then(() => this.props.history.push('/monetary/accounts/'));
     }
   };
 
