@@ -1,15 +1,14 @@
 export default {
-  home: { name: 'Home', path: '/' },
-  accountsList: { name: 'AccountsList', path: '/accounts' },
-  accountsForm: { name: 'AccountsForm', path: '/account' },
-  accountsTransaction: { name: 'AccountsTransaction', path: '/accounts-transaction' },
-  accountTransactionsList: { name: 'AccountTransactionsList', path: '/account-transactions-list/:id' },
-  accountsEntry: { name: 'AccountsEntry', path: '/accounts-entry' },
-  accountsOut: { name: 'AccountsOut', path: '/accounts-out' },
+  home: { name: 'Home', path: '/monetary' },
+  accountsList: { name: 'AccountsList', path: '/monetary/accounts' },
+  accountsForm: { name: 'AccountsForm', path: '/monetary/account' },
+  accountsTransaction: { name: 'AccountsTransaction', path: '/monetary/accounts-transaction' },
+  accountTransactionsList: { name: 'AccountTransactionsList', path: '/monetary/account-transactions-list/:id' },
+  accountsEntry: { name: 'AccountsEntry', path: '/monetary/accounts-entry' },
+  accountsOut: { name: 'AccountsOut', path: '/monetary/accounts-out' },
 };
 
 export const accountsEdit = {
   name: 'AccountsEdit',
-  path: '/account/:id',
-  pathWithoutParams: '/edit',
+  path: '/monetary/account/:id',
 }

@@ -18,7 +18,7 @@ const App: React.FC = () => {
         <Toolbar>
 
           <IconButton color="inherit" aria-label="Menu" component={(props) => (
-            <Link to='/' {...props} />
+            <Link to='/monetary' {...props} />
           )}>
             <MenuIcon />
           </IconButton>
