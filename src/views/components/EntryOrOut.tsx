@@ -58,22 +58,32 @@ export default class AccountTransaction extends Component<Prop, State> {
     const accountFrom = accounts.find(account => account.id === from);
 
     if (accountFrom) {
-      const oldBalancesFrom = accountFrom.balances || new Array<Balance>();
-      const newBalancesFrom = oldBalancesFrom.map(balance => {
-        if (balance.code === currency) {
-          const transactions = balance.transactions || new Array<Transaction>();
-          return {
-            ...balance,
-            value: isEntry ? balance.value + value : balance.value - value,
-            transactions: transactions.concat([{ date: new Date().toISOString(), value, currency, from, description, sended: false, received: false,  entry: !!isEntry, out: !isEntry }])
+      const oldBalances = accountFrom.balances || new Array<Balance>();
+      let newBalances;
+      if (oldBalances.some(balance => balance.code === currency)) {
+        newBalances = oldBalances.map(balance => {
+          if (balance.code === currency) {
+            const transactions = balance.transactions || new Array<Transaction>();
+            return {
+              ...balance,
+              value: isEntry ? balance.value + value : balance.value - value,
+              transactions: transactions.concat([{ date: new Date().toISOString(), sended: false, received: false, out: !isEntry, entry: !!isEntry, value, currency, from, description }])
+            }
           }
-        }
-        return balance;
-      });
+          return balance;
+        });
+      } else {
+        newBalances = oldBalances.concat([{
+          value,
+          code: currency,
+          transactions: [{ date: new Date().toISOString(), sended: false, received: false, out: !isEntry, entry: !!isEntry, value, currency, from, description }]
+        }])
+      }
+
 
       FirebaseService.updateData(from, 'accounts', {
         ...accountFrom,
-        balances: newBalancesFrom,
+        balances: newBalances,
       }).then(() => this.props.history.push('/monetary/accounts/'));
     }
   };
@@ -127,13 +137,19 @@ export default class AccountTransaction extends Component<Prop, State> {
                 <MenuItem value="">
                   <em>Selecione a moeda</em>
                 </MenuItem>
-                {balances.map(balance => {
+                {!isEntry && balances.map(balance => {
                   const l10n = new Intl.NumberFormat("pt-BR", { style: "currency", currency: balance.code });
                   const currency = currencies.find(currency => currency.code === balance.code);
-                  const complement = !isEntry ? ` (Valor máximo: ${l10n.format(balance.value)})`: ''
                   return (
                     <MenuItem value={balance.code}>
-                      {`${currency ? currency.singular : balance.code}${complement}`}
+                      {`${currency ? currency.singular : balance.code} (Valor máximo: ${l10n.format(balance.value)})`}
+                    </MenuItem>
+                  )
+                })}
+                {isEntry && currencies.map(currency => {
+                  return (
+                    <MenuItem value={currency.code}>
+                      {currency.singular}
                     </MenuItem>
                   )
                 })}

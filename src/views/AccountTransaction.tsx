@@ -107,6 +107,8 @@ export default class AccountTransaction extends Component<any, State> {
 
     const { loading, accounts, from, to, currency, value, description } = this.state;
 
+    console.log(to);
+
     const account = !!from && accounts.find(account => account.id === from);
     const balances = account && account.balances ? account.balances : [];
 

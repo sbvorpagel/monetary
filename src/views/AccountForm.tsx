@@ -72,7 +72,13 @@ class AccountsForm extends Component<Props, State> {
         description,
         balances,
       });
-      this.props.history.push(`/monetary/account/${newId}`);
+      if (newId) {
+        FirebaseService.updateData(newId, 'accounts', {
+          id: newId,
+          description,
+          balances,
+        }).then(() => this.props.history.push(`/monetary/account/${newId}`));
+      }
     }
   }
 
