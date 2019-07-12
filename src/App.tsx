@@ -1,14 +1,24 @@
-import React from 'react';
-import AccountForm from './views/AccountForm';
-import AccountList from './views/AccountList';
-import AccountTransaction from './views/AccountTransaction';
-import AccountTransactionsList from './views/AccountTransactionsList';
-import AccountEntry from './views/AccountEntry';
-import AccountOut from './views/AccountOut';
-import Home from './views/Home';
-import urls, { accountsEdit } from './utils/urls';
-import { Typography, IconButton, AppBar, Toolbar } from "@material-ui/core/index";
-import MenuIcon from '@material-ui/icons/Menu';
+import React from "react";
+import AccountForm from "./views/AccountForm";
+import AccountList from "./views/AccountList";
+import AccountTransaction from "./views/AccountTransaction";
+import AccountTransactionsList from "./views/AccountTransactionsList";
+import AccountTransfer from "./views/AccountTransfer";
+import AccountEntry from "./views/AccountEntry";
+import AccountOut from "./views/AccountOut";
+import Home from "./views/Home";
+import urls, {
+  accountsEdit,
+  home,
+  accountTransactionsList
+} from "./utils/urls";
+import {
+  Typography,
+  IconButton,
+  AppBar,
+  Toolbar
+} from "@material-ui/core/index";
+import MenuIcon from "@material-ui/icons/Menu";
 import { Route, Link } from "react-router-dom";
 
 const App: React.FC = () => {
@@ -16,58 +26,69 @@ const App: React.FC = () => {
     <React.Fragment>
       <AppBar position="static" style={{ marginBottom: 16 }}>
         <Toolbar>
-
-          <IconButton color="inherit" aria-label="Menu" component={(props) => (
-            <Link to='/monetary' {...props} />
-          )}>
+          <IconButton
+            color="inherit"
+            aria-label="Menu"
+            component={props => <Link to={`${home.path}`} {...props} />}
+          >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit">
-            Controle financeiro
+            Controle de carteiras
           </Typography>
         </Toolbar>
       </AppBar>
-      <Route exact
-        path={urls.home.path}
-        render={(props) => <Home {...props} />}
-      />
+      <Route exact path={home.path} render={props => <Home {...props} />} />
 
-      <Route exact
+      <Route
+        exact
         path={accountsEdit.path}
-        render={(props) => <AccountForm {...props} />}
+        render={props => <AccountForm {...props} />}
       />
 
-      <Route exact
+      <Route
+        exact
         path={urls.accountsList.path}
-        render={(props) => <AccountList {...props} />}
+        render={props => <AccountList {...props} />}
       />
 
-      <Route exact
+      <Route
+        exact
         path={urls.accountsTransaction.path}
-        render={(props) => <AccountTransaction {...props} />}
+        render={props => <AccountTransaction {...props} />}
       />
 
-      <Route exact
-        path={urls.accountTransactionsList.path}
-        render={(props) => <AccountTransactionsList {...props} />}
+      <Route
+        exact
+        path={accountTransactionsList.path}
+        render={props => <AccountTransactionsList {...props} />}
       />
 
-      <Route exact
+      <Route
+        exact
+        path={urls.accountsTransfer.path}
+        render={props => <AccountTransfer {...props} />}
+      />
+
+      <Route
+        exact
         path={urls.accountsEntry.path}
-        render={(props) => <AccountEntry {...props} />}
+        render={props => <AccountEntry {...props} />}
       />
 
-      <Route exact
+      <Route
+        exact
         path={urls.accountsOut.path}
-        render={(props) => <AccountOut {...props} />}
+        render={props => <AccountOut {...props} />}
       />
 
-      <Route exact
+      <Route
+        exact
         path={urls.accountsForm.path}
-        render={(props) => <AccountForm {...props} />}
+        render={props => <AccountForm {...props} />}
       />
-    </React.Fragment >
+    </React.Fragment>
   );
-}
+};
 
 export default App;

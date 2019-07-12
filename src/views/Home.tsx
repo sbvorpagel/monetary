@@ -1,50 +1,50 @@
-import React, { Component } from 'react';
-import { Typography, Card, CardContent, CardActionArea } from "@material-ui/core/index";
+import React, { Component } from "react";
+import {
+  Typography,
+  Card,
+  CardContent,
+  CardActionArea
+} from "@material-ui/core/index";
+import urls from "../utils/urls";
 
 interface Props {
-  history?: any
+  history?: any;
 }
 
+interface MenuItem {
+  name: string;
+  path: string;
+}
+
+const keys = Object.keys(urls);
+// @ts-ignore
+const menuItems: Array<MenuItem> = (keys || []).map((key: string) => urls[key]);
+
 class Home extends Component<Props> {
+  MenuRenderer = (menuItem: MenuItem) => {
+    return (
+      <Card style={{ margin: "16px" }}>
+        <CardActionArea onClick={() => this.props.history.push(menuItem.path)}>
+          <CardContent>
+            <Typography variant="headline" component="h2">
+              {menuItem.name}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    );
+  };
 
   render() {
     return (
       <React.Fragment>
-        <Card style={{ margin: '2%' }}>
-          <CardActionArea onClick={() => this.props.history.push('/monetary/account')}>
-            <CardContent>
-              <Typography variant="headline" component="h2">Cadastro de contas</Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-        <Card style={{ margin: '2%' }}>
-          <CardActionArea onClick={() => this.props.history.push('/monetary/accounts')}>
-            <CardContent>
-              <Typography variant="headline" component="h2">Listagem de contas</Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-        <Card style={{ margin: '2%' }}>
-          <CardActionArea onClick={() => this.props.history.push('/monetary/accounts-transaction')}>
-            <CardContent>
-              <Typography variant="headline" component="h2">Cadastro de transações</Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-        <Card style={{ margin: '2%' }}>
-          <CardActionArea onClick={() => this.props.history.push('/monetary/accounts-entry')}>
-            <CardContent>
-              <Typography variant="headline" component="h2">Cadastro de entrada</Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-        <Card style={{ margin: '2%' }}>
-          <CardActionArea onClick={() => this.props.history.push('/monetary/accounts-out')}>
-            <CardContent>
-              <Typography variant="headline" component="h2">Cadastro de saída</Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+        {menuItems.map(menuItem => (
+          <this.MenuRenderer
+            key={menuItem.path}
+            name={menuItem.name}
+            path={menuItem.path}
+          />
+        ))}
       </React.Fragment>
     );
   }

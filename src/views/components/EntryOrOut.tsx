@@ -3,6 +3,8 @@ import { Button, TextField, Typography, Card, CardContent, Select, MenuItem } fr
 import FirebaseService from "../../services/FirebaseService";
 import currencies from '../../utils/currencies';
 
+import urls from '../../utils/urls';
+
 interface Transaction {
   date: string
   description: string
@@ -84,7 +86,7 @@ export default class AccountTransaction extends Component<Prop, State> {
       FirebaseService.updateData(from, 'accounts', {
         ...accountFrom,
         balances: newBalances,
-      }).then(() => this.props.history.push('/monetary/accounts/'));
+      }).then(() => this.props.history.push(urls.accountsList.path));
     }
   };
 
