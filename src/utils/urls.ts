@@ -10,13 +10,13 @@ export default {
     name: "Fazer uma transferência entre contas",
     path: `${path}/accounts-transfer`
   },
+  accountsList: { name: "Listagem de carteiras", path: `${path}/accounts` },
+  accountsForm: { name: "Cadastro de carteira", path: `${path}/account` },
   accountsEntry: {
     name: "Registrar uma entrada",
     path: `${path}/accounts-entry`
   },
-  accountsOut: { name: "Registrar uma saída", path: `${path}/accounts-out` },
-  accountsForm: { name: "Cadastro de carteira", path: `${path}/account` },
-  accountsList: { name: "Listagem de carteiras", path: `${path}/accounts` }
+  accountsOut: { name: "Registrar uma saída", path: `${path}/accounts-out` }
 };
 
 export const accountsEdit = {
