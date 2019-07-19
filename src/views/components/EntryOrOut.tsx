@@ -3,7 +3,6 @@ import { Button, TextField, Typography, Card, CardContent, Select, MenuItem } fr
 import FirebaseService from "../../services/FirebaseService";
 import currencies from '../../utils/currencies';
 
-import urls from '../../utils/urls';
 import { home } from '../../utils/urls';
 
 interface Transaction {

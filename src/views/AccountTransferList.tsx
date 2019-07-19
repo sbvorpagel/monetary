@@ -11,10 +11,9 @@ interface Transfer {
   currency: string
   to: string
   from: string
-  sended: boolean
   entry: boolean
   out: boolean
-  received: boolean
+  type: string
 }
 
 interface Balance {
@@ -108,11 +107,15 @@ class AccountTransferList extends Component<any, State> {
                 {transactions.map((transaction: Transfer, index: number) => {
                   const l10n = new Intl.NumberFormat("pt-BR", { style: "currency", currency: transaction.currency });
                   let type;
-                  if (transaction.entry) type = 'Entrada';
-                  if (transaction.out) type = 'Saída';
-                  if (transaction.sended) type = 'Enviado';
-                  if (transaction.received) type = 'Recebido';
-
+                  if (transaction.type === 'INITIAL') {
+                    type = 'Depósto inicial';
+                  } else if (transaction.type === 'MOVEMENT') {
+                    if (transaction.entry) type = 'Entrada';
+                    if (transaction.out) type = 'Saída';
+                  } else {
+                    if (transaction.entry) type = 'Enviado';
+                    if (transaction.out) type = 'Recebido';
+                  }
                   return (
                     <TableRow key={transaction.currency + transaction.date + index}>
                       <TableCell>{transaction.date}</TableCell>
