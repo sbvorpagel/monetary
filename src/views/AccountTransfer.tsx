@@ -22,7 +22,7 @@ interface Transfer {
   sended: boolean;
   out: boolean;
   entry: boolean;
-  received: boolean;
+  type: string;
 }
 
 interface Balance {
@@ -82,7 +82,7 @@ export default class AccountTransfer extends Component<any, State> {
               {
                 date: new Date().toISOString(),
                 sended: true,
-                received: false,
+                type: 'TRANSFER',
                 out: false,
                 entry: false,
                 value,
@@ -110,7 +110,7 @@ export default class AccountTransfer extends Component<any, State> {
                 {
                   date: new Date().toISOString(),
                   sended: false,
-                  received: true,
+                  type: 'TRANSFER',
                   out: false,
                   entry: false,
                   value,
@@ -133,7 +133,7 @@ export default class AccountTransfer extends Component<any, State> {
               {
                 date: new Date().toISOString(),
                 sended: false,
-                received: true,
+                type: 'TRANSFER',
                 out: false,
                 entry: false,
                 value,

@@ -55,6 +55,9 @@ class AccountTransactionsList extends Component<any, State> {
     });
   };
 
+  //@ts-ignore
+  sortFunction = (a: Transaction, b: Transaction) => + (b.date > a.date) - (b.date < a.date);
+
   render() {
     const { account, loading } = this.state;
 
@@ -79,7 +82,6 @@ class AccountTransactionsList extends Component<any, State> {
       (acc, value: Balance) => acc.concat(value.transactions || []),
       new Array<Transaction>()
     );
-    console.log(transactions);
 
     return (
       <React.Fragment>
@@ -126,7 +128,7 @@ class AccountTransactionsList extends Component<any, State> {
               variant="headline"
               component="h2"
             >
-              Transações vinculadas com essa conta
+              Movimentações vinculadas com essa conta
             </Typography>
             <Table>
               <TableHead>
@@ -139,7 +141,7 @@ class AccountTransactionsList extends Component<any, State> {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {transactions.map((transaction: Transaction, index: number) => {
+                {transactions.sort(this.sortFunction).map((transaction: Transaction, index: number) => {
                   const l10n = new Intl.NumberFormat("pt-BR", {
                     style: "currency",
                     currency: transaction.currency
