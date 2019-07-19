@@ -84,7 +84,7 @@ class AccountTransactionsList extends Component<any, State> {
     );
 
     return (
-      <React.Fragment>
+      <div style={{ paddingBottom: 16 }}>
         {!!balances && !!balances.length && (
           <React.Fragment>
             <Typography
@@ -173,7 +173,7 @@ class AccountTransactionsList extends Component<any, State> {
             </Table>
           </React.Fragment>
         )}
-      </React.Fragment>
+      </div>
     );
   }
 }

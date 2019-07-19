@@ -282,7 +282,7 @@ export default class AccountTransaction extends Component<any, State> {
     if (loading) return null;
 
     return (
-      <React.Fragment>
+      <div style={{ paddingBottom: 16 }}>
         <form onSubmit={this.submit}>
           <Card
             style={{ marginLeft: "2%", marginRight: "2%", marginTop: "2%" }}
@@ -429,7 +429,7 @@ export default class AccountTransaction extends Component<any, State> {
             </Card>
           )}
         </form>
-      </React.Fragment>
+      </div>
     );
   }
 }
