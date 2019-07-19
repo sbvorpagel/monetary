@@ -25,7 +25,7 @@ interface Transaction {
   sended: boolean;
   entry: boolean;
   out: boolean;
-  received: boolean;
+  type: string;
 }
 
 interface Balance {
@@ -145,10 +145,15 @@ class AccountTransactionsList extends Component<any, State> {
                     currency: transaction.currency
                   });
                   let type;
-                  if (transaction.entry) type = "Entrada";
-                  if (transaction.out) type = "Saída";
-                  if (transaction.sended) type = "Enviado";
-                  if (transaction.received) type = "Recebido";
+                  if (transaction.type === 'INITIAL') {
+                    type = 'Depósto inicial';
+                  } else if (transaction.type === 'MOVEMENT') {
+                    if (transaction.entry) type = 'Entrada';
+                    if (transaction.out) type = 'Saída';
+                  } else {
+                    if (transaction.entry) type = 'Enviado';
+                    if (transaction.out) type = 'Recebido';
+                  }
 
                   return (
                     <TableRow
