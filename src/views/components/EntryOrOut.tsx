@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, TextField, Typography, Card, CardContent, Select, MenuItem } from "@material-ui/core/index";
 import FirebaseService from "../../services/FirebaseService";
 import currencies from '../../utils/currencies';
-
 import { home } from '../../utils/urls';
 
 interface Transaction {
@@ -11,8 +10,7 @@ interface Transaction {
   value: number
   currency: string
   from: string
-  out: boolean
-  entry: boolean
+  sended: boolean
   type: string
 }
 
@@ -68,7 +66,7 @@ export default class AccountTransaction extends Component<Prop, State> {
             return {
               ...balance,
               value: isEntry ? balance.value + value : balance.value - value,
-              transactions: transactions.concat([{ date: new Date().toISOString(), type: 'MOVEMENT', out: !isEntry, entry: !!isEntry, value, currency, from, description }])
+              transactions: transactions.concat([{ date: new Date().toISOString(), type: 'MOVEMENT', sended: !isEntry, value, currency, from, description }])
             }
           }
           return balance;
@@ -77,7 +75,7 @@ export default class AccountTransaction extends Component<Prop, State> {
         newBalances = oldBalances.concat([{
           value,
           code: currency,
-          transactions: [{ date: new Date().toISOString(), type: 'MOVEMENT', out: !isEntry, entry: !!isEntry, value, currency, from, description }]
+          transactions: [{ date: new Date().toISOString(), type: 'MOVEMENT', sended: !isEntry, value, currency, from, description }]
         }])
       }
 
@@ -85,7 +83,10 @@ export default class AccountTransaction extends Component<Prop, State> {
       FirebaseService.updateData(from, 'accounts', {
         ...accountFrom,
         balances: newBalances,
-      }).then(() => this.props.history.push(home.path));
+      }).then(() => {
+        
+        this.props.history.push(home.path);
+      });
     }
   };
 

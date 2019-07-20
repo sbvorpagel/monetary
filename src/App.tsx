@@ -7,10 +7,12 @@ import AccountTransfer from "./views/AccountTransfer";
 import AccountEntry from "./views/AccountEntry";
 import AccountOut from "./views/AccountOut";
 import Home from "./views/Home";
+import AccountReport from "./views/AccountReport";
 import urls, {
   accountsEdit,
   home,
-  accountTransactionsList
+  accountTransactionsList,
+  report
 } from "./utils/urls";
 import {
   Typography,
@@ -86,6 +88,12 @@ const App: React.FC = () => {
         exact
         path={urls.accountsForm.path}
         render={props => <AccountForm {...props} />}
+      />
+
+      <Route
+        exact
+        path={report.path}
+        render={props => <AccountReport {...props} />}
       />
     </React.Fragment>
   );

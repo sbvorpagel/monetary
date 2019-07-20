@@ -21,8 +21,7 @@ interface Transaction {
   quotation: number;
   to: string;
   from: string;
-  out: boolean;
-  entry: boolean;
+  sended: boolean;
   type: string;
 }
 
@@ -104,10 +103,9 @@ export default class AccountTransaction extends Component<any, State> {
           transactions: transactions.concat([
             {
               date: new Date().toISOString(),
-              type: "transaction",
+              type: "TRANSACTION",
               quotation,
-              out: isFrom,
-              entry: !isFrom,
+              sended: isFrom,
               value,
               currency: currencyFrom,
               to: accountTo,
@@ -126,10 +124,9 @@ export default class AccountTransaction extends Component<any, State> {
           transactions: transactions.concat([
             {
               date: new Date().toISOString(),
-              type: "transaction",
+              type: "TRANSACTION",
               quotation,
-              out: !isFrom,
-              entry: isFrom,
+              sended: !isFrom,
               value,
               currency: currencyTo,
               to: accountTo,

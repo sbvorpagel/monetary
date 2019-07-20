@@ -9,11 +9,14 @@ import {
   TableHead,
   TableBody,
   TableCell,
+  Button,
   TableRow
 } from "@material-ui/core/index";
 import FirebaseService from "../services/FirebaseService";
 import currencies from "../utils/currencies";
 import withWidth from "@material-ui/core/withWidth";
+import moment from "moment";
+import { report } from "../utils/urls";
 
 interface Transaction {
   date: Date;
@@ -23,8 +26,6 @@ interface Transaction {
   to: string;
   from: string;
   sended: boolean;
-  entry: boolean;
-  out: boolean;
   type: string;
 }
 
@@ -76,13 +77,12 @@ class AccountTransactionsList extends Component<any, State> {
       return 1;
     };
     //@ts-ignore
-    const { balances = [] } = account;
+    const { balances = [], id } = account || {};
     const transactions = (balances || []).reduce(
       //@ts-ignore
       (acc, value: Balance) => acc.concat(value.transactions || []),
       new Array<Transaction>()
     );
-
     return (
       <div style={{ paddingBottom: 16 }}>
         {!!balances && !!balances.length && (
@@ -107,12 +107,19 @@ class AccountTransactionsList extends Component<any, State> {
                   <GridListTile key={balance.code} cols={getGridListCols()}>
                     <Card style={{ margin: 2 }}>
                       <CardContent>
-                        <Typography variant="headline" component="h2">
-                          {currency ? currency.singular : balance.code}
-                        </Typography>
-                        <Typography>{`Valor: ${l10n.format(
-                          balance.value
-                        )}`}</Typography>
+                        <div style={{ display: 'flex' }}>
+                          <div style={{ flexGrow: 1 }}>
+                            <Typography variant="headline" component="h2">
+                              {currency ? currency.singular : balance.code}
+                            </Typography>
+                            <Typography>{`Valor: ${l10n.format(
+                              balance.value
+                            )}`}</Typography>
+                          </div>
+                          <div style={{ flexGrow: 0 }}>
+                            <Button onClick={() => this.props.history.push(`${report.simplePath}/${id}/${balance.code}`)}>Relatório</Button>
+                          </div>
+                        </div>
                       </CardContent>
                     </Card>
                   </GridListTile>
@@ -150,22 +157,26 @@ class AccountTransactionsList extends Component<any, State> {
                   if (transaction.type === 'INITIAL') {
                     type = 'Depósto inicial';
                   } else if (transaction.type === 'MOVEMENT') {
-                    if (transaction.entry) type = 'Entrada';
-                    if (transaction.out) type = 'Saída';
-                  } else {
-                    if (transaction.entry) type = 'Enviado';
-                    if (transaction.out) type = 'Recebido';
+                    if (transaction.sended) type = 'Saída';
+                    if (!transaction.sended) type = 'Entrada';
+                  } else if (transaction.type === 'TRANSFER') {
+                    if (transaction.sended) type = 'Transferência - Saída';
+                    if (!transaction.sended) type = 'Transferência - Entrada';
+                  } else if (transaction.type === 'TRANSACTION') {
+                    if (transaction.sended) type = 'Compra - Saída';
+                    if (!transaction.sended) type = 'Compra - Entrada';
                   }
 
                   return (
                     <TableRow
                       key={transaction.currency + transaction.date + index}
+                      
                     >
-                      <TableCell>{transaction.date}</TableCell>
-                      <TableCell>{transaction.currency}</TableCell>
-                      <TableCell>{l10n.format(transaction.value)}</TableCell>
-                      <TableCell>{type}</TableCell>
-                      <TableCell>{transaction.description}</TableCell>
+                      <TableCell style={transaction.sended ? {color: 'red'} : {}} >{moment(transaction.date).format("DD/MM/YYYY HH:MM")}</TableCell>
+                      <TableCell style={transaction.sended ? {color: 'red'} : {}}>{transaction.currency}</TableCell>
+                      <TableCell style={transaction.sended ? {color: 'red'} : {}}>{l10n.format(transaction.value)}</TableCell>
+                      <TableCell style={transaction.sended ? {color: 'red'} : {}}>{type}</TableCell>
+                      <TableCell style={transaction.sended ? {color: 'red'} : {}}>{transaction.description}</TableCell>
                     </TableRow>
                   );
                 })}

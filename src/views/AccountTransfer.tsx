@@ -20,8 +20,6 @@ interface Transfer {
   to: string;
   from: string;
   sended: boolean;
-  out: boolean;
-  entry: boolean;
   type: string;
 }
 
@@ -83,8 +81,6 @@ export default class AccountTransfer extends Component<any, State> {
                 date: new Date().toISOString(),
                 sended: true,
                 type: 'TRANSFER',
-                out: false,
-                entry: false,
                 value,
                 currency,
                 to,
@@ -111,8 +107,6 @@ export default class AccountTransfer extends Component<any, State> {
                   date: new Date().toISOString(),
                   sended: false,
                   type: 'TRANSFER',
-                  out: false,
-                  entry: false,
                   value,
                   currency,
                   to,
@@ -134,8 +128,6 @@ export default class AccountTransfer extends Component<any, State> {
                 date: new Date().toISOString(),
                 sended: false,
                 type: 'TRANSFER',
-                out: false,
-                entry: false,
                 value,
                 currency,
                 to,

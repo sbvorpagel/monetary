@@ -11,18 +11,24 @@ export default {
     path: `${path}/accounts-transfer`
   },
   accountsList: { name: "Listagem de carteiras", path: `${path}/accounts` },
-  accountsForm: { name: "Cadastro de carteira", path: `${path}/account` },
   accountsEntry: {
     name: "Registrar uma entrada",
     path: `${path}/accounts-entry`
   },
-  accountsOut: { name: "Registrar uma saída", path: `${path}/accounts-out` }
+  accountsOut: { name: "Registrar uma saída", path: `${path}/accounts-out` },
+  accountsForm: { name: "Cadastro de carteira", path: `${path}/account` }
 };
 
 export const accountsEdit = {
   name: "Edição de carteira",
   path: `${path}/account/:id`
 };
+
+export const report = {
+  name: "Relatório",
+  path: `${path}/report/:id/:code`,
+  simplePath: `${path}/report`
+}
 
 export const home = {
   name: "Home",
