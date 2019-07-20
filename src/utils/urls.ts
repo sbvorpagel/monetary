@@ -1,5 +1,5 @@
-// const path = '/monetary';
-const path = "";
+const path = '/monetary';
+// const path = "";
 
 export default {
   accountsTransaction: {
