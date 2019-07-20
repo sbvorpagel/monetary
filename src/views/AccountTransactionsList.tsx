@@ -59,6 +59,27 @@ class AccountTransactionsList extends Component<any, State> {
   //@ts-ignore
   sortFunction = (a: Transaction, b: Transaction) => + (b.date > a.date) - (b.date < a.date);
 
+  renderButton = (transactions: Array<Transaction>, code: string, id: string) => {
+    const filtredTransactions = transactions
+      .filter((transaction: Transaction) =>
+          transaction.currency === code &&
+          transaction.type === 'TRANSACTION' &&
+          //@ts-ignore
+          transaction.to === id &&
+          transaction.sended
+      );
+
+      if (filtredTransactions && filtredTransactions.length) {
+        return (
+          <div style={{ flexGrow: 0 }}>
+            <Button onClick={() => this.props.history.push(`${report.simplePath}/${id}/${code}`)}>Relatório</Button>
+          </div>
+        );
+      }
+
+      return (<div></div>)
+  }
+
   render() {
     const { account, loading } = this.state;
 
@@ -83,6 +104,7 @@ class AccountTransactionsList extends Component<any, State> {
       (acc, value: Balance) => acc.concat(value.transactions || []),
       new Array<Transaction>()
     );
+
     return (
       <div style={{ paddingBottom: 16 }}>
         {!!balances && !!balances.length && (
@@ -116,9 +138,7 @@ class AccountTransactionsList extends Component<any, State> {
                               balance.value
                             )}`}</Typography>
                           </div>
-                          <div style={{ flexGrow: 0 }}>
-                            <Button onClick={() => this.props.history.push(`${report.simplePath}/${id}/${balance.code}`)}>Relatório</Button>
-                          </div>
+                          {this.renderButton(transactions, balance.code, id)}
                         </div>
                       </CardContent>
                     </Card>
@@ -168,10 +188,7 @@ class AccountTransactionsList extends Component<any, State> {
                   }
 
                   return (
-                    <TableRow
-                      key={transaction.currency + transaction.date + index}
-                      
-                    >
+                    <TableRow key={transaction.currency + transaction.date + index}>
                       <TableCell style={transaction.sended ? {color: 'red'} : {}} >{moment(transaction.date).format("DD/MM/YYYY HH:MM")}</TableCell>
                       <TableCell style={transaction.sended ? {color: 'red'} : {}}>{transaction.currency}</TableCell>
                       <TableCell style={transaction.sended ? {color: 'red'} : {}}>{l10n.format(transaction.value)}</TableCell>
